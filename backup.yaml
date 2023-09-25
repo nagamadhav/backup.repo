@@ -1,22 +1,21 @@
 ---
-- name: Copy Files from Minio to Windows
-  hosts: 10.10.5.184
+- name: Download Files from MinIO
+  hosts: 10.10.5.76
   gather_facts: no
-
   tasks:
-    - name: Download file from Minio
-      get_url:
-        url: "https://10.10.5.76:9001/browser/security/U1FMaXRlLw=="
-        dest: "/mnt/data/security/SQLite"
-        headers:
-          Authorization: "Bearer {{ minio_access_key }}:{{ minio_secret_key }}"
-      delegate_to: 10.10.5.76
+    - name: Ensure local directory exists
+      file:
+        path: "/path/to/local/storage"
+        state: directory
+      tags:
+        - always
 
- 
-
-    - name: Copy file to Windows
-      win_copy:
-        src: "/security/SQLite"
-        dest: "C:"/mnt/data/security/SQLite"
-      become: yes
-      become_user: Administrator
+    - name: Download files from MinIO
+      command: "mc cp minio/your_bucket/remote_file.txt /path/to/local/storage/"
+      environment:
+        MC_HOST: "https://10.10.5.76:9001/browser/security/U1FMaXRlLw=="
+        MC_ALIAS: "minio"
+        MC_ACCESS_KEY: "your_minio_access_key"
+        MC_SECRET_KEY: "your_minio_secret_key"
+      tags:
+        - download
