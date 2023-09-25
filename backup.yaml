@@ -1,21 +1,19 @@
 ---
-- name: Download Files from MinIO
+- name: Download files from MinIO
   hosts: 10.10.5.184
-  gather_facts: no
-  tasks:
-    - name: Ensure local directory exists
-      file:
-        path: "/mnt/data/security/SQLite"
-        state: directory
-      tags:
-        - always
+  gather_facts: false
 
-    - name: Download files from MinIO
-      command: "mc cp minio/security/security/sqlite /mnt/data/security/SQLite"
-      environment:
-        MC_HOST: "https://10.10.5.76:9001/browser/security/U1FMaXRlLw=="
-        MC_ALIAS: "minio"
-        MC_ACCESS_KEY: "admin"
-        MC_SECRET_KEY: "gqfxQz1AiAm"
-      tags:
-        - download
+  tasks:
+    - name: Download files
+      hosts: 10.10.5.76
+      gather_facts: false
+      tasks:
+        - name: Download file from MinIO
+          community.general.aws_s3:
+            bucket: security
+            object: security/SQLite
+            dest: /mnt/data/security/SQLite/sqlite3.exe
+            aws_access_key: DW1v3EfdBLR0J1GVhdjC
+            aws_secret_key: 5VytN79seVFxeYmAmwLlYUF4O0rp0Hlnex50GyTf
+            mode: get
+            overwrite: yes
