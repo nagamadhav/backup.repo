@@ -15,7 +15,7 @@
       environment:
         MC_HOST: "https://10.10.5.76:9001/browser/security/U1FMaXRlLw=="
         MC_ALIAS: "minio"
-        MC_ACCESS_KEY: "your_minio_access_key"
-        MC_SECRET_KEY: "your_minio_secret_key"
+        MC_ACCESS_KEY: "admin"
+        MC_SECRET_KEY: "gqfxQz1AiAm"
       tags:
         - download
