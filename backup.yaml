@@ -10,7 +10,7 @@
         - name: Download file from MinIO
           community.general.aws_s3:
             bucket: security
-            object: security/SQLite
+            object: C:\mc
             dest: /mnt/data/security/SQLite/sqlite3.exe
             aws_access_key: DW1v3EfdBLR0J1GVhdjC
             aws_secret_key: 5VytN79seVFxeYmAmwLlYUF4O0rp0Hlnex50GyTf
